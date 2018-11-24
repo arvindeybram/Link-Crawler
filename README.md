@@ -9,6 +9,10 @@ The crawler program has placed in 'spiders' directory which can be viewed by: cd
 
 Working of crawl spider program:
 
+
+
+
+
 class MyItem(Item):
     url= Field()                                                            #Field is a scrapy dictionary - we will use it to 
                                                                             #store the response parsed
