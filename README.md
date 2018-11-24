@@ -11,14 +11,18 @@ Working of crawl spider program:
 
 
 
-
+#
 
 class MyItem(Item):
-    url= Field()                                                            #Field is a scrapy dictionary - we will use it to 
+    url= Field()
+    
+                                                                            #Field is a scrapy dictionary - we will use it to 
                                                                             #store the response parsed
 
+
 class MySpider(CrawlSpider):
-    with open("2000urls.txt", "rt") as f:                                   #Open file from where URL is fetched by the spider
+    with open("2000urls.txt", "rt") as f:                                   
+                                                                            #Open file from where URL is fetched by the spider
         start_urls = [url.strip() for url in f.readlines()]                 #Initiate start URL line by line of the file
     name = 'link_checker'                                                   #Spider name    
     rules = (Rule(LinkExtractor(), callback='parse_url', follow=True), )    #Link extractors are objects whose only purpose is 
