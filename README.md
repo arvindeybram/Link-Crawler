@@ -10,22 +10,22 @@ The crawler program has placed in 'spiders' directory which can be viewed by: cd
 Working of crawl spider program:
 
 
-class MyItem(Item):
-(1)    url= Field()
-
-class MySpider(CrawlSpider):
-(2)    with open("2000urls.txt", "rt") as f:
-(3)        start_urls = [url.strip() for url in f.readlines()]
-(4)    name = 'link_checker'
-(5)    rules = (Rule(LinkExtractor(), callback='parse_url', follow=True), )
-
-    def parse_url(self, response):
-(6)        f = open("2001urls.txt",'a+')
-        item = MyItem()
-(7)        item['url'] = response.url
-(8)        if "http" in item['url']:
-(9)            f.write(str(item['url'])+'\n')
-        return item
+(1)class MyItem(Item):
+(2)    url= Field()
+(3)
+(4)class MySpider(CrawlSpider):
+(5)    with open("2000urls.txt", "rt") as f:
+(6)        start_urls = [url.strip() for url in f.readlines()]
+(7)    name = 'link_checker'
+(8)    rules = (Rule(LinkExtractor(), callback='parse_url', follow=True), )
+(9)
+(10)    def parse_url(self, response):
+(11)        f = open("2001urls.txt",'a+')
+(12)       item = MyItem()
+(13)        item['url'] = response.url
+(14)        if "http" in item['url']:
+(15)            f.write(str(item['url'])+'\n')
+(16)        return item
 
 
 1)  Field is a scrapy dictionary - we will use it to store the response parsed
