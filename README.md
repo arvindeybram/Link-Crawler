@@ -10,41 +10,42 @@ The crawler program has placed in 'spiders' directory which can be viewed by: cd
 Working of crawl spider program:
 
 
-
-#
-
 class MyItem(Item):
-    url= Field()
-    
-                                                                            Field is a scrapy dictionary - we will use it to 
-                                                                            store the response parsed
-
+(1)    url= Field()
 
 class MySpider(CrawlSpider):
-    with open("2000urls.txt", "rt") as f:                                   
-                                                                            Open file from where URL is fetched by the spider
-        start_urls = [url.strip() for url in f.readlines()]                 Initiate start URL line by line of the file
-    name = 'link_checker'                                                   Spider name    
-    rules = (Rule(LinkExtractor(), callback='parse_url', follow=True), )    Link extractors are objects whose only purpose is 
-                                                                            to extract links from web pages. We need to declare 
-                                                                            some rules so that the spider works as intended, 
-                                                                                  
-                                                                               callbck:  calls our function for each link of the start
-                                                                               URL and  returns a list containing Item and/or                                                                                          Request objects (or subclasses of them). In our case,
-                                                                               the URLs and all the URLs residing in the webpage of 
-                                                                               the first URL
-                                                                                  
-                                                                               follow=True is a boolean which specifies if links
-                                                                               should be recursively followed from each response
-                                                                               that are extracted  
+(2)    with open("2000urls.txt", "rt") as f:
+(3)        start_urls = [url.strip() for url in f.readlines()]
+(4)    name = 'link_checker'
+(5)    rules = (Rule(LinkExtractor(), callback='parse_url', follow=True), )
 
-    def parse_url(self, response):                                             our function which recieves URL in the'respose'
-                                                                               argument
-        f = open("2001urls.txt",'a+')                                          open our source file in append mode
-        item = MyItem()                                                            
-        item['url'] = response.url                                             parsing all the 'URL' fields from the response and 
-                                                                               write into the Field dictionary
-        if "http" in item['url']:                                              checking if http is present in the 'Field dictionary' 
-                                                                               -- http is specified to filter out garbage links 
-            f.write(str(item['url'])+'\n')                                     if http found write into file
+    def parse_url(self, response):
+(6)        f = open("2001urls.txt",'a+')
+        item = MyItem()
+(7)        item['url'] = response.url
+(8)        if "http" in item['url']:
+(9)            f.write(str(item['url'])+'\n')
         return item
+
+
+1)  Field is a scrapy dictionary - we will use it to store the response parsed
+2)  Open file from where URL is fetched by the spider
+3)  Initiate start URL line by line of the file
+4)  Spider name
+5)  Link extractors are objects whose only purpose is to extract links from web pages. 
+    We need to declare some rules so that the spider works as intended, 
+    
+    callbck:  calls our function for each link of the start URL and returns a list 
+    containing Item and/or Request objects (or subclasses of them). In our case, 
+    the URLs and all the URLs residing in the webpage of the first URL  
+    
+    follow=True is a boolean which specifies if links should be recursively followed 
+    from each response that is extracted our function which receives URL in the 'respose' argument
+                     
+6)  open our source file in append mode
+7)  parsing all the 'URL' fields from the response and write into the Field dictionary
+8)  checking if http is present in the 'Field dictionary' -- http is specified to filter out garbage links 
+9)  if http found write into file
+
+
+
